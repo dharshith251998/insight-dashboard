@@ -17,10 +17,9 @@ interface PieChartWidgetProps {
   total: number;
   navigateTo: string;
   className?: string;
-  showTotal?: boolean;
 }
 
-const PieChartWidget = ({ title, icon, data, total, navigateTo, className, showTotal = false }: PieChartWidgetProps) => {
+const PieChartWidget = ({ title, icon, data, total, navigateTo, className }: PieChartWidgetProps) => {
   const navigate = useNavigate();
 
   const handleSliceClick = (entry: PieSlice) => {
@@ -42,11 +41,6 @@ const PieChartWidget = ({ title, icon, data, total, navigateTo, className, showT
     }
     return null;
   };
-
-  // Create legend items including total if showTotal is true
-  const legendItems = showTotal 
-    ? [...data, { name: 'Total', value: total, color: 'hsl(217, 91%, 60%)', filterKey: 'all' }]
-    : data;
 
   return (
     <Card className={cn("card-shadow hover:card-shadow-hover transition-all duration-300 animate-fade-in", className)}>
@@ -84,7 +78,7 @@ const PieChartWidget = ({ title, icon, data, total, navigateTo, className, showT
         
         {/* Custom Legend */}
         <div className="mt-4 space-y-2">
-          {legendItems.map((item, index) => (
+          {data.map((item, index) => (
             <div 
               key={index} 
               className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded px-2 py-1 transition-colors"

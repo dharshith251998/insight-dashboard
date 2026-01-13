@@ -11,7 +11,7 @@ const RecordingServerDetail = () => {
   const navigate = useNavigate();
   const filter = searchParams.get('filter');
 
-  const filteredData = filter 
+  const filteredData = filter && filter !== 'all'
     ? recordingServerData.filter(server => server.status === filter)
     : recordingServerData;
 
@@ -58,7 +58,7 @@ const RecordingServerDetail = () => {
             <div>
               <h1 className="text-2xl font-bold text-foreground">Recording Server Details</h1>
               <p className="text-muted-foreground">
-                {filter ? `Showing ${filter} servers` : 'All servers'} • {filteredData.length} servers
+                {filter === 'all' ? 'All servers' : filter ? `Showing ${filter} servers` : 'All servers'} • {filteredData.length} servers
               </p>
             </div>
           </div>
