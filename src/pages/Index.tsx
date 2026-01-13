@@ -12,13 +12,13 @@ const Index = () => {
   ];
 
   const rsChartData = [
-    { name: 'Online', value: stats.recordingServers.online, color: 'hsl(199, 89%, 48%)', filterKey: 'online' },
-    { name: 'Offline', value: stats.recordingServers.offline, color: 'hsl(220, 10%, 50%)', filterKey: 'offline' },
+    { name: 'Online', value: stats.recordingServers.online, color: 'hsl(142, 72%, 42%)', filterKey: 'online' },
+    { name: 'Offline', value: stats.recordingServers.offline, color: 'hsl(0, 72%, 51%)', filterKey: 'offline' },
   ];
 
   const acsChartData = [
-    { name: 'Open', value: stats.acs.open, color: 'hsl(38, 92%, 50%)', filterKey: 'open' },
-    { name: 'Closed', value: stats.acs.closed, color: 'hsl(262, 83%, 58%)', filterKey: 'closed' },
+    { name: 'Door Open', value: stats.acs.open, color: 'hsl(45, 93%, 47%)', filterKey: 'open' },
+    { name: 'Door Closed', value: stats.acs.closed, color: 'hsl(262, 83%, 58%)', filterKey: 'closed' },
   ];
 
   return (
@@ -66,21 +66,22 @@ const Index = () => {
         {/* Pie Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <PieChartWidget
-            title="Camera Status"
+            title="Camera Count"
             icon={<Camera className="w-5 h-5" />}
             data={cameraChartData}
             total={stats.cameras.total}
             navigateTo="/cameras"
+            showTotal={true}
           />
           <PieChartWidget
-            title="Recording Servers"
+            title="Recording Server"
             icon={<Server className="w-5 h-5" />}
             data={rsChartData}
             total={stats.recordingServers.total}
             navigateTo="/recording-servers"
           />
           <PieChartWidget
-            title="Access Control"
+            title="ACS Status"
             icon={<DoorOpen className="w-5 h-5" />}
             data={acsChartData}
             total={stats.acs.total}

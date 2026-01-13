@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -17,9 +17,10 @@ interface PieChartWidgetProps {
   total: number;
   navigateTo: string;
   className?: string;
+  showTotal?: boolean;
 }
 
-const PieChartWidget = ({ title, icon, data, total, navigateTo, className }: PieChartWidgetProps) => {
+const PieChartWidget = ({ title, icon, data, total, navigateTo, className, showTotal = false }: PieChartWidgetProps) => {
   const navigate = useNavigate();
 
   const handleSliceClick = (entry: PieSlice) => {
@@ -42,21 +43,18 @@ const PieChartWidget = ({ title, icon, data, total, navigateTo, className }: Pie
     return null;
   };
 
+  // Create legend items including total if showTotal is true
+  const legendItems = showTotal 
+    ? [...data, { name: 'Total', value: total, color: 'hsl(217, 91%, 60%)', filterKey: 'all' }]
+    : data;
+
   return (
     <Card className={cn("card-shadow hover:card-shadow-hover transition-all duration-300 animate-fade-in", className)}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary/10 text-primary">
-            {icon}
-          </div>
-          <div>
-            <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-            <p className="text-sm text-muted-foreground">Total: {total}</p>
-          </div>
-        </div>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
+        <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -65,7 +63,7 @@ const PieChartWidget = ({ title, icon, data, total, navigateTo, className }: Pie
                 cy="50%"
                 innerRadius={50}
                 outerRadius={80}
-                paddingAngle={3}
+                paddingAngle={2}
                 dataKey="value"
                 onClick={(_, index) => handleSliceClick(data[index])}
                 style={{ cursor: 'pointer' }}
@@ -80,16 +78,31 @@ const PieChartWidget = ({ title, icon, data, total, navigateTo, className }: Pie
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend 
-                verticalAlign="bottom" 
-                height={36}
-                formatter={(value: string) => (
-                  <span className="text-sm text-foreground">{value}</span>
-                )}
-              />
             </PieChart>
           </ResponsiveContainer>
         </div>
+        
+        {/* Custom Legend */}
+        <div className="mt-4 space-y-2">
+          {legendItems.map((item, index) => (
+            <div 
+              key={index} 
+              className="flex items-center justify-between cursor-pointer hover:bg-muted/50 rounded px-2 py-1 transition-colors"
+              onClick={() => handleSliceClick(item)}
+            >
+              <div className="flex items-center gap-2">
+                <span 
+                  className="w-3 h-3 rounded-full" 
+                  style={{ backgroundColor: item.color }}
+                />
+                <span className="text-sm text-foreground">{item.name}</span>
+              </div>
+              <span className="text-sm font-medium text-foreground">{item.value}</span>
+            </div>
+          ))}
+        </div>
+        
+        <p className="text-xs text-muted-foreground text-center mt-4">Click a slice to view details</p>
       </CardContent>
     </Card>
   );
