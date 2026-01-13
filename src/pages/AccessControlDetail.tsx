@@ -11,7 +11,7 @@ const AccessControlDetail = () => {
   const navigate = useNavigate();
   const filter = searchParams.get('filter');
 
-  const filteredData = filter 
+  const filteredData = filter && filter !== 'all'
     ? acsData.filter(device => device.status === filter)
     : acsData;
 
@@ -58,7 +58,7 @@ const AccessControlDetail = () => {
             <div>
               <h1 className="text-2xl font-bold text-foreground">Access Control Details</h1>
               <p className="text-muted-foreground">
-                {filter ? `Showing ${filter} doors` : 'All doors'} • {filteredData.length} access points
+                {filter === 'all' ? 'All doors' : filter ? `Showing ${filter} doors` : 'All doors'} • {filteredData.length} access points
               </p>
             </div>
           </div>

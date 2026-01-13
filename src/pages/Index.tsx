@@ -9,16 +9,19 @@ const Index = () => {
   const cameraChartData = [
     { name: 'Active', value: stats.cameras.active, color: 'hsl(142, 72%, 42%)', filterKey: 'active' },
     { name: 'Inactive', value: stats.cameras.inactive, color: 'hsl(0, 72%, 51%)', filterKey: 'inactive' },
+    { name: 'Total', value: stats.cameras.total, color: 'hsl(217, 91%, 60%)', filterKey: 'all' },
   ];
 
   const rsChartData = [
     { name: 'Online', value: stats.recordingServers.online, color: 'hsl(142, 72%, 42%)', filterKey: 'online' },
     { name: 'Offline', value: stats.recordingServers.offline, color: 'hsl(0, 72%, 51%)', filterKey: 'offline' },
+    { name: 'Total', value: stats.recordingServers.total, color: 'hsl(217, 91%, 60%)', filterKey: 'all' },
   ];
 
   const acsChartData = [
     { name: 'Door Open', value: stats.acs.open, color: 'hsl(45, 93%, 47%)', filterKey: 'open' },
     { name: 'Door Closed', value: stats.acs.closed, color: 'hsl(262, 83%, 58%)', filterKey: 'closed' },
+    { name: 'Total', value: stats.acs.total, color: 'hsl(217, 91%, 60%)', filterKey: 'all' },
   ];
 
   return (
@@ -71,7 +74,6 @@ const Index = () => {
             data={cameraChartData}
             total={stats.cameras.total}
             navigateTo="/cameras"
-            showTotal={true}
           />
           <PieChartWidget
             title="Recording Server"

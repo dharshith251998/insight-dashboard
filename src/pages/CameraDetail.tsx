@@ -11,7 +11,7 @@ const CameraDetail = () => {
   const navigate = useNavigate();
   const filter = searchParams.get('filter');
 
-  const filteredData = filter 
+  const filteredData = filter && filter !== 'all'
     ? cameraData.filter(camera => camera.status === filter)
     : cameraData;
 
@@ -58,7 +58,7 @@ const CameraDetail = () => {
             <div>
               <h1 className="text-2xl font-bold text-foreground">Camera Details</h1>
               <p className="text-muted-foreground">
-                {filter ? `Showing ${filter} cameras` : 'All cameras'} • {filteredData.length} devices
+                {filter === 'all' ? 'All cameras' : filter ? `Showing ${filter} cameras` : 'All cameras'} • {filteredData.length} devices
               </p>
             </div>
           </div>
