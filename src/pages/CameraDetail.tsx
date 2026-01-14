@@ -69,6 +69,7 @@ const CameraDetail = () => {
           title="Monthly Camera Status Report"
           data={monthlyData.cameras}
           config={chartConfig}
+          filter={filter}
         />
 
         {/* Data Table */}

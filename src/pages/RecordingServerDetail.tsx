@@ -69,6 +69,7 @@ const RecordingServerDetail = () => {
           title="Monthly Server Status Report"
           data={monthlyData.recordingServers}
           config={chartConfig}
+          filter={filter}
         />
 
         {/* Data Table */}

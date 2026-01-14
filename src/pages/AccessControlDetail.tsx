@@ -69,6 +69,7 @@ const AccessControlDetail = () => {
           title="Monthly Access Control Status Report"
           data={monthlyData.acs}
           config={chartConfig}
+          filter={filter}
         />
 
         {/* Data Table */}

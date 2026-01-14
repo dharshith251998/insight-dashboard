@@ -31,9 +31,13 @@ interface MonthlyChartProps {
   title: string;
   data: ChartData[];
   config: ChartConfig;
+  filter?: string | null;
 }
 
-const MonthlyChart = ({ title, data, config }: MonthlyChartProps) => {
+const MonthlyChart = ({ title, data, config, filter }: MonthlyChartProps) => {
+  // Determine which series to show based on filter
+  const showSeries1 = !filter || filter === 'all' || filter === 'active' || filter === 'online' || filter === 'open';
+  const showSeries2 = !filter || filter === 'all' || filter === 'inactive' || filter === 'offline' || filter === 'closed';
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
@@ -78,18 +82,22 @@ const MonthlyChart = ({ title, data, config }: MonthlyChartProps) => {
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend />
-                  <Bar 
-                    dataKey={config.dataKey1} 
-                    name={config.label1}
-                    fill={config.color1} 
-                    radius={[4, 4, 0, 0]}
-                  />
-                  <Bar 
-                    dataKey={config.dataKey2} 
-                    name={config.label2}
-                    fill={config.color2} 
-                    radius={[4, 4, 0, 0]}
-                  />
+                  {showSeries1 && (
+                    <Bar 
+                      dataKey={config.dataKey1} 
+                      name={config.label1}
+                      fill={config.color1} 
+                      radius={[4, 4, 0, 0]}
+                    />
+                  )}
+                  {showSeries2 && (
+                    <Bar 
+                      dataKey={config.dataKey2} 
+                      name={config.label2}
+                      fill={config.color2} 
+                      radius={[4, 4, 0, 0]}
+                    />
+                  )}
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -111,24 +119,28 @@ const MonthlyChart = ({ title, data, config }: MonthlyChartProps) => {
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey={config.dataKey1} 
-                    name={config.label1}
-                    stroke={config.color1} 
-                    strokeWidth={2}
-                    dot={{ fill: config.color1, strokeWidth: 2 }}
-                    activeDot={{ r: 6 }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey={config.dataKey2} 
-                    name={config.label2}
-                    stroke={config.color2} 
-                    strokeWidth={2}
-                    dot={{ fill: config.color2, strokeWidth: 2 }}
-                    activeDot={{ r: 6 }}
-                  />
+                  {showSeries1 && (
+                    <Line 
+                      type="monotone" 
+                      dataKey={config.dataKey1} 
+                      name={config.label1}
+                      stroke={config.color1} 
+                      strokeWidth={2}
+                      dot={{ fill: config.color1, strokeWidth: 2 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  )}
+                  {showSeries2 && (
+                    <Line 
+                      type="monotone" 
+                      dataKey={config.dataKey2} 
+                      name={config.label2}
+                      stroke={config.color2} 
+                      strokeWidth={2}
+                      dot={{ fill: config.color2, strokeWidth: 2 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  )}
                 </LineChart>
               </ResponsiveContainer>
             </div>
