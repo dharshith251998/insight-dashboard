@@ -8,6 +8,7 @@ import Analytics from "./pages/Analytics";
 import CameraDetail from "./pages/CameraDetail";
 import RecordingServerDetail from "./pages/RecordingServerDetail";
 import AccessControlDetail from "./pages/AccessControlDetail";
+import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/cameras" element={<CameraDetail />} />
           <Route path="/recording-servers" element={<RecordingServerDetail />} />
           <Route path="/access-control" element={<AccessControlDetail />} />
+          <Route path="/reports" element={<Reports />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

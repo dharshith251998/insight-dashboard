@@ -1,11 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, BarChart3, Camera, Server, DoorOpen, ChevronLeft, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Camera, Server, DoorOpen, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/analytics', label: 'Analytics', icon: BarChart3 },
+  { path: '/reports', label: 'Reports', icon: FileText },
 ];
 
 const Sidebar = () => {
